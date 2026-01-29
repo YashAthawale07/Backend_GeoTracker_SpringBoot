@@ -5,6 +5,7 @@ import com.geotracker.backend.service.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+//@CrossOrigin(origins = "http://localhost:56496")
 @RequestMapping("/employees")
 public class EmployeeController {
 
