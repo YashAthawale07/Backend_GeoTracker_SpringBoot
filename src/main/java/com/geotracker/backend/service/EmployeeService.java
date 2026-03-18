@@ -17,7 +17,7 @@ public class EmployeeService {
     }
 
     public Employee create(Employee emp) {
-        return repo.save(emp); // 🔥 DB CREATED HERE
+        return repo.save(emp);
     }
 
     public Employee getByEmpId(String empId) {
@@ -29,16 +29,21 @@ public class EmployeeService {
         return repo.findAll();
     }
 
-
-    // Update employee by empId
-    public Optional<Employee> updateEmployeeByEmpId(String empId, String newName) {
+    // Update — only updates fields that are passed (non-null)
+    public Optional<Employee> updateEmployeeByEmpId(String empId, String name, String email,
+                                                    String phone, String department,
+                                                    String role, String post) {
         return repo.findByEmpId(empId).map(emp -> {
-            emp.setName(newName);
+            if (name != null)       emp.setName(name);
+            if (email != null)      emp.setEmail(email);
+            if (phone != null)      emp.setPhone(phone);
+            if (department != null) emp.setDepartment(department);
+            if (role != null)       emp.setRole(role);
+            if (post != null)       emp.setPost(post);
             return repo.save(emp);
         });
     }
 
-    // Delete employee by empId
     public boolean deleteEmployeeByEmpId(String empId) {
         Optional<Employee> empOpt = repo.findByEmpId(empId);
         if (empOpt.isPresent()) {
@@ -47,25 +52,4 @@ public class EmployeeService {
         }
         return false;
     }
-
-//    public boolean deleteEmployeeByEmpId(String empId) {
-//        Employee emp = repo.findByEmpId(empId);
-//        if (emp != null) {
-//            repo.delete(emp);
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public Employee updateEmployee(String id, Employee emp) {
-//        Optional<Employee> existing = repo.findById(id);
-//        if(existing.isPresent()) {
-//            Employee e = existing.get();
-//            e.setName(emp.getName());
-//            e.setEmpId(emp.getEmpId());
-//            return repo.save(e);
-//        }
-//        return null;
-//    }
-
 }
