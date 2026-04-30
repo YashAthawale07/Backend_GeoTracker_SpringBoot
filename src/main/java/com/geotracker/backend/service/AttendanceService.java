@@ -30,10 +30,10 @@ public class AttendanceService {
     // ===== Mark Attendance =====
     public String markAttendance(String empId, double lat, double lon) {
 
-//        if (!TimeValidator.isOfficeTime()) {
-//            System.out.println("Outside office hours");
-//            return "Outside office hours";
-//        }
+        if (!TimeValidator.isOfficeTime()) {
+            System.out.println("Outside office hours");
+            return "Outside office hours";
+        }
 
         Geofence geofence;
         try {
@@ -43,10 +43,10 @@ public class AttendanceService {
             return "Office location not configured. Contact admin.";
         }
 
-//        if (!locationService.isInside(lat, lon, geofence)) {
-//            System.out.println("Outside office location");
-//            return "Outside office location";
-//        }
+        if (!locationService.isInside(lat, lon, geofence)) {
+            System.out.println("Outside office location");
+            return "Outside office location";
+        }
 
         if (repo.existsByEmpIdAndDate(empId, LocalDate.now())) {
             System.out.println("Attendance already marked");
